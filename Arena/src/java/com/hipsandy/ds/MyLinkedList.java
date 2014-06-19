@@ -1,28 +1,28 @@
 package java.com.hipsandy.ds;
 
-public class MyLinkedList {
+public class MyLinkedList<T> {
 	
-	private Node head;
+	private Node<T> head;
 	private int size;
 	
-	MyLinkedList(int val) {
-		this.head = new Node(val);
+	MyLinkedList(T val) {
+		this.head = new Node<T>(val);
 		this.size = 1;
 	}
 	
-	public void add(int x) {
-		Node n = head;
+	public void add(T x) {
+		Node<T> n = head;
 		while (n.next != null) {
 			n = n.next;
 		}
-		n.next = new Node(x);
+		n.next = new Node<T>(x);
 		size += 1;
 	}
 	
-	public Node find(int x) {
-		Node n = head;
+	public Node<T> find(T x) {
+		Node<T> n = head;
 		while (n != null) {
-			if (n.val == x) {
+			if (n.val.equals(x)) {
 				return n;
 			}
 			n = n.next;
@@ -34,20 +34,20 @@ public class MyLinkedList {
 		return size;
 	}
 	
-	public boolean remove(int x) {
+	public boolean remove(T x) {
 		if (head == null) {
 			throw new IllegalStateException("Uninitialized linked-list. Nothing to remove ! ");
 		} else {
-			if (head.val == x) {
+			if (head.val.equals(x)) {
 				head = head.next;
 				return true;
 			}
 		}
 		
-		Node prev = head;
-		Node curr = prev.next;
+		Node<T> prev = head;
+		Node<T> curr = prev.next;
 		while (curr != null) {
-			if (curr.val == x) {
+			if (curr.val.equals(x)) {
 				prev.next = curr.next;
 				return true;
 			}
@@ -59,17 +59,17 @@ public class MyLinkedList {
 
 }
 
-class Node {
-	int val;
-	Node next;
+class Node<T> {
+	T val;
+	Node<T> next;
 	
-	Node(int val) {
+	Node(T val) {
 		this.val = val;
 		this.next = null;
 	}
 	
 	Node() {
-		this.val = -9999;
+		this.val = null;
 		this.next = null;
 	}
 }
