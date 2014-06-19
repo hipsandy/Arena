@@ -2,30 +2,51 @@ package java.com.hipsandy.ds;
 
 public class MyLinkedList<T> {
 	
-	private Node<T> head;
+	private class Node {
+		T val;
+		Node next;
+		
+		Node(T val) {
+			this.val = val;
+			this.next = null;
+		}
+		
+		Node(T val, Node next) {
+			this.val = val;
+			this.next = next;
+		}
+		
+		Node() {
+			this.val = null;
+			this.next = null;
+		}
+	}
+	
+	private Node head;
 	private int size;
 	
 	MyLinkedList(T val) {
-		this.head = new Node<T>(val);
+		this.head = new Node(val);
 		this.size = 1;
 	}
 	
+	
 	public void insertAtTail(T x) {
-		Node<T> n = head;
+		Node n = head;
 		while (n.next != null) {
 			n = n.next;
 		}
-		n.next = new Node<T>(x);
+		n.next = new Node(x);
 		size += 1;
 	}
 	
 	public void insertAtHead(T x) {
-		head = new Node<T>(x, head);
+		head = new Node(x, head);
 		size += 1;
 	}
 	
-	public Node<T> find(T x) {
-		Node<T> n = head;
+	public Node find(T x) {
+		Node n = head;
 		while (n != null) {
 			if (n.val.equals(x)) {
 				return n;
@@ -47,14 +68,14 @@ public class MyLinkedList<T> {
 		if (index == 0) {
 			insertAtHead(value);
 		} else {
-			Node<T> n = head;
-			Node<T> nextNode = null;
+			Node n = head;
+			Node nextNode = null;
 			
 			for (int i = 0; i < index - 1; i++) {
 				n = n.next;
 				nextNode = n.next;
 			}
-			n.next = new Node<T>(value, nextNode);
+			n.next = new Node(value, nextNode);
 			size += 1;
 		}
 	}
@@ -70,8 +91,8 @@ public class MyLinkedList<T> {
 			}
 		}
 		
-		Node<T> prev = head;
-		Node<T> curr = prev.next;
+		Node prev = head;
+		Node curr = prev.next;
 		while (curr != null) {
 			if (curr.val.equals(x)) {
 				prev.next = curr.next;
@@ -90,23 +111,23 @@ public class MyLinkedList<T> {
 		}
 		
 		if (index == 0) {
-			Node<T> removed = head;
+			Node removed = head;
 			head = head.next;
 			size -= 1;
 			return removed.val;
 		}
 		
-		Node<T> n = head;
+		Node n = head;
 		for (int i = 0; i < index - 1; i++) {
 			n = n.next;
 		}
-		Node<T> removed = n.next;
+		Node removed = n.next;
 		n.next = n.next.next;
 		return removed.val;
 	}
 	
 	public void print() {
-		Node<T> n = head;
+		Node n = head;
 		while(n.next != null) {
 			System.out.print(n.val.toString() + " > ");
 		}
@@ -117,22 +138,3 @@ public class MyLinkedList<T> {
 
 }
 
-class Node<T> {
-	T val;
-	Node<T> next;
-	
-	Node(T val) {
-		this.val = val;
-		this.next = null;
-	}
-	
-	Node(T val, Node<T> next) {
-		this.val = val;
-		this.next = next;
-	}
-	
-	Node() {
-		this.val = null;
-		this.next = null;
-	}
-}
