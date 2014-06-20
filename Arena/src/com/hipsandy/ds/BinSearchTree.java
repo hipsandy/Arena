@@ -1,51 +1,74 @@
-package java.com.hipsandy.ds;
+package com.hipsandy.ds;
 
-import java.util.Comparator;
 
 public class BinSearchTree<T extends Comparable<T>> {
 	
-	private class Node {
+	public static class Node<T> {
 		T val;
-		Node right;
-		Node left;
+		Node<T> right;
+		Node<T> left;
 		
-		Node(T val, Node left, Node right) {
+		public Node(T val, Node<T> left, Node<T> right) {
 			this.val = val;
 			this.left = left;
 			this.right = right;
 		}
 		
-		Node(T val) {
+		public Node(T val) {
 			this.val = val;
 			this.left = null;
 			this.right = null;
 		}
+		
+		public T getVal() {
+			return val;
+		}
+
+		public void setVal(T val) {
+			this.val = val;
+		}
+
+		public Node<T> getRight() {
+			return right;
+		}
+
+		public void setRight(Node<T> right) {
+			this.right = right;
+		}
+
+		public Node<T> getLeft() {
+			return left;
+		}
+
+		public void setLeft(Node<T> left) {
+			this.left = left;
+		}
 	}
 	
-	private Node root;
+	private Node<T> root;
 	
-	public BinSearchTree(Node root) {
+	public BinSearchTree(Node<T> root) {
 		this.root = root;
 	}
 	
 	// BST methods
 	
 	public void insert(T val) {
-		Node n = insert(root, val);
+		Node<T> n = insert(root, val);
 		if (root == null) {
 			root = n;
 		}
 	}
 	
-	public Node find(T val) {
+	public Node<T> find(T val) {
 		return find(root, val);
 	}
 	
-	public Node delete(T val) {
+	public Node<T> delete(T val) {
 		return delete(root, val);
 	}
 	
-	private Node delete(Node n, T val) {
+	private Node<T> delete(Node<T> n, T val) {
 		if (n == null) {
 			return null;
 		}
@@ -62,7 +85,7 @@ public class BinSearchTree<T extends Comparable<T>> {
 				return n.left;
 			} else {
 				// If both right and left child exist
-				Node newNode = findMin(n.right);
+				Node<T> newNode = findMin(n.right);
 				delete(n.right, newNode.val);
 				newNode.left = n.left;
 				newNode.right = n.right;
@@ -72,7 +95,7 @@ public class BinSearchTree<T extends Comparable<T>> {
 		return null;
 	}
 	
-	private Node findMin(Node n) {
+	private Node<T> findMin(Node<T> n) {
 		if (n == null) {
 			throw new IllegalArgumentException("null value not acceptable");
 		}
@@ -86,7 +109,7 @@ public class BinSearchTree<T extends Comparable<T>> {
 	
 	
 	
-	private Node find(Node n, T val) {
+	private Node<T> find(Node<T> n, T val) {
 		while(n != null) {
 			if (val.compareTo(n.val) > 0) {
 				n = n.right;
@@ -99,9 +122,9 @@ public class BinSearchTree<T extends Comparable<T>> {
 		return null;
 	}
 	
-	private Node insert(Node n, T val) {
+	private Node<T> insert(Node<T> n, T val) {
 		if (n == null) {
-			return new Node(val);
+			return new Node<T>(val);
 		}
 		
 		if (val.compareTo(n.val) < 0) {
