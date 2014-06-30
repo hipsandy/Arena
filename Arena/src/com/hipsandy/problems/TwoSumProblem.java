@@ -13,16 +13,8 @@ import java.util.Set;
  */
 public class TwoSumProblem {
 	
-	int[] input = null;
-	int sum;
 	
-	
-	TwoSumProblem(int[] input, int sum) {
-		this.input = input;
-		this.sum = sum;
-	}
-	
-	public void solve() {
+	public void solve(int[] input, int sum) {
 		Set<Integer> lookup = new HashSet<>();
 		List<String> result = new ArrayList<>();
 		for (int i : input) {
@@ -35,6 +27,7 @@ public class TwoSumProblem {
 			}
 		}
 		// Print result
+		System.out.println("2-sum solution for: " + sum);
 		for (String res : result) {
 			System.out.println(res);
 		}
@@ -42,8 +35,11 @@ public class TwoSumProblem {
 	
 	
 	public static void main(String[] args) {
-		TwoSumProblem prob = new TwoSumProblem(new int[]{-1, 4, 2, 7, -8, 5, 3, -4, 9}, 5);
-		prob.solve();
+		TwoSumProblem prob = new TwoSumProblem();
+		prob.solve(new int[]{-1, 4, 2, 7, -8, 5, 3, -4, 9}, 5);
+		prob.solve(new int[]{-1, 4, 2, 7, -8, 5, 3, -4, 9}, 9);
+		prob.solve(new int[]{-1, -4, -5, 55, 4, -3, -2, -9, -23, -11}, -12);
+		prob.solve(new int[]{-1, -4, -5, 55, 4, -3, -2, -9, -23, -11}, 10);
 	}
 
 }
