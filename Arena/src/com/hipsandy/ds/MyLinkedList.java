@@ -1,8 +1,8 @@
-package java.com.hipsandy.ds;
+package com.hipsandy.ds;
 
 public class MyLinkedList<T> {
 	
-	private class Node {
+	public class Node {
 		T val;
 		Node next;
 		
@@ -20,6 +20,7 @@ public class MyLinkedList<T> {
 			this.val = null;
 			this.next = null;
 		}
+		
 	}
 	
 	private Node head;
@@ -29,7 +30,6 @@ public class MyLinkedList<T> {
 		this.head = new Node(val);
 		this.size = 1;
 	}
-	
 	
 	public void insertAtTail(T x) {
 		Node n = head;
@@ -128,13 +128,49 @@ public class MyLinkedList<T> {
 	
 	public void print() {
 		Node n = head;
-		while(n.next != null) {
+		while(n != null) {
 			System.out.print(n.val.toString() + " > ");
+			n = n.next;
 		}
-		System.out.print("null");
+		System.out.println("null");
 	}
 	
 	
-
+	public Node reverse() {
+	  return reverseUsingThreePointers();	
+	}
+	
+	private Node reverseUsingThreePointers() {
+		if(this.size == 1) {
+			return head;
+		}
+		Node prevNode = null;
+		Node currNode = head;
+		Node nextNode = currNode.next;
+		
+		while(nextNode != null) {
+			// Reverse the pointer
+			currNode.next = prevNode;
+			
+			// Move the pointers ahead
+			prevNode =  currNode;
+			currNode = nextNode;
+			nextNode = currNode.next;
+		}
+		currNode.next = prevNode;
+		head = currNode;
+		return head;
+	}
+	
+	public static void main(String[] args) {
+		MyLinkedList<Integer> list = new MyLinkedList<Integer>(0);
+		list.insertAtTail(1);
+		list.insertAtTail(2);
+		list.insertAtTail(3);
+		list.insertAtTail(4);
+		list.print();
+		list.reverse();
+		list.print();
+	}
 }
 
