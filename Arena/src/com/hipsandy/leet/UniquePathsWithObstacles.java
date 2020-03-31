@@ -1,40 +1,54 @@
 package src.com.hipsandy.leet;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.sun.tools.javac.util.Pair;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UniquePathsWithObstacles {
 
-  public int uniquePathsWithObstacles(int[][] obstacleGrid) {
-    // go all the way to the right and then go down
-    // go all the way down and then go right
 
+  public static void main(String[] args) {
 
-    // Graph
-    // each square is a node. Each node can have upto 4 edges.
-    // At any edge only if you go right or down you can go towards the finish.
-    // If there is no more way to go right, you go down. And if you can't go down further you go right.
+  }
 
-    // Store the paths in a an array of positions (matrix index). Use equality to verify uniqueness of path.
+  static class Solution {
 
-    List<String> path = new ArrayList<>();
+    int maxRowIdx;
+    int maxColIdx;
+    Map<Pair<Integer, Integer>, Integer> lookUp = new HashMap<>();
 
-    int i =0, j = 0;
-
-    while (i < obstacleGrid.length && j < obstacleGrid[0].length) {
-      path.add(i + "" + j);
-      if (j < obstacleGrid[0].length) {
-        j++;
-      } else {
-        i++;
-      }
-
-      // if this path has already
+    public int uniquePaths(int m, int n) {
+      this.maxRowIdx = m - 1;
+      this.maxColIdx = n - 1;
+      return findPaths(0, 0);
 
     }
 
+    public int findPaths(int r, int c) {
+      if (r > maxRowIdx || c > maxColIdx) {
+        // can't go further
+        return 0;
+      }
 
-    return -1;
+      if (maxRowIdx == r && maxColIdx == c) {
+        //base case
+        return 1;
+      }
+
+      // Do a lookup to see if the information was already calculated, then no need to do the work again
+      Integer prevCalculatedValue = lookUp.get(new Pair<>(r, c));
+      if (prevCalculatedValue != null) {
+        return prevCalculatedValue;
+      }
+
+      // Explore options since this has not been calculated before
+      int noOfPaths = findPaths(r, c + 1) + findPaths(r + 1, c);
+      lookUp.put(new Pair<>(r, c), noOfPaths);
+      return noOfPaths;
+    }
+
   }
+
 
 }
