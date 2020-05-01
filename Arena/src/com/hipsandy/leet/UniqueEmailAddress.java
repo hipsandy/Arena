@@ -43,24 +43,17 @@ public class UniqueEmailAddress {
       Set uniqueSet = new HashSet();
       for (String email : emails) {
         boolean plusFound = false;
-        boolean atFound = false;
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < email.length(); i++) {
+        StringBuilder sb = new StringBuilder();
+        int length = email.length();
+        for (int i = 0; i < length; i++) {
           char c = email.charAt(i);
-          if (atFound) {
-            stringBuilder.append(c);
-            continue;
+
+          if (c == '@') {
+            sb.append(email.substring(i, length));
+            break;
           }
 
-          if (plusFound) {
-            if (c == '@') {
-              atFound = true;
-              stringBuilder.append(c);
-            }
-            continue;
-          }
-
-          if (c == '.') {
+          if (plusFound || c == '.') {
             continue;
           }
 
@@ -69,15 +62,9 @@ public class UniqueEmailAddress {
             continue;
           }
 
-          if (c == '@') {
-            atFound = true;
-            stringBuilder.append(c);
-            continue;
-          }
-
-          stringBuilder.append(c);
+          sb.append(c);
         }
-        uniqueSet.add(stringBuilder.toString());
+        uniqueSet.add(sb.toString());
       }
       System.out.println("Result - " + uniqueSet);
       return uniqueSet.size();
