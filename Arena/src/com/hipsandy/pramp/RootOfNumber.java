@@ -9,35 +9,37 @@ public class RootOfNumber {
 
     static double root(double x, int n) {
 
-      int low = 0;
+      double low = 0;
+      double high = x;
 
-      // first fine upper and lower limit integers
-      for (int i = 1; i < x; i++) {
-        if (power(i, n) < x) {
-          low = i;
+      while (low < high) {
+        double mid = (low + high) / 2;
+        double val = power(mid, n);
+        if (val == x || (Math.abs(x - val) <= 0.001)) {
+          return mid;
+        } else if (val < x) {
+          low = mid;
+        } else {
+          high = mid;
         }
       }
-      // iterate in increments of .001 and find the closest approximation
 
-      return 0;
+      return -1;
     }
 
-    static double power (double i, int n) {
-      if (n == 1) {
-        return i;
-      }
-      int c = 0;
-      double val = 0.0;
-      while (c < n - 1) {
-        val = i * i;
-        c++;
+    static double power (double x, int n) {
+      double val = 1;
+      while (n > 0) {
+        val = val * x;
+        n--;
       }
       return val;
     }
 
     public static void main(String[] args) {
-      root(7, 3);
-      root(9, 2);
+
+      System.out.println(root(7, 3));
+      System.out.println(root(9, 2));
 
     }
 
